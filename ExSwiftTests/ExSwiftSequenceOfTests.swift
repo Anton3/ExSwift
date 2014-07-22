@@ -18,6 +18,17 @@ class ExSwiftSequenceOfTests: XCTestCase {
         XCTAssertEqual(first!, 1)
     }
     
+    func testFirstN () {
+        let firstTwo = SequenceOf(sequence).first(2)
+        XCTAssertEqualObjects(firstTwo, [1, 2])
+        
+        let notEnoughElements = SequenceOf(sequence).first(10)
+        XCTAssertEqualObjects(notEnoughElements, [1, 2, 3, 4, 5])
+        
+        let noElements = SequenceOf(emptySequence).first(1)
+        XCTAssertEqualObjects(noElements, [])
+    }
+    
     func testFirstEmotySequence () {
         var first = SequenceOf(emptySequence).first()
         XCTAssertNil(first)

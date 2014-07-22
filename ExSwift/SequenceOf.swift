@@ -20,6 +20,15 @@ extension SequenceOf {
     }
     
     /**
+    *  First n elements of the sequence
+    *  @param n Number of leading elements
+    *  @return Array of first n elements
+    */
+    func first (n: Int) -> Array<T> {
+        return self.take(n).toArray()
+    }
+    
+    /**
     *  Checks if call returns true for any element of self
     *  @param call Function to call for each element
     *  @return True if call returns true for any element of self
