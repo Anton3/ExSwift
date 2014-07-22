@@ -782,6 +782,14 @@ extension Array {
     subscript (first: Int, second: Int, rest: Int...) -> Array {
         return at(reinterpretCast([first, second] + rest))
     }
+    
+    /**
+    *  Returns a lazy SequenceOf self, allowing for lazy operation.
+    *  @return SequenceOf self
+    */
+    var lazy: SequenceOf<T> {
+    return SequenceOf(self)
+    }
 
 }
 

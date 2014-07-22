@@ -283,7 +283,7 @@ class ExSwiftArrayTests: XCTestCase {
         })
 
         XCTAssertEqualObjects(group, [true: 2, false: 3])
-    }
+m=     }
 
     func testReduceRight () {
         let list = [[1, 1], [2, 3], [4, 5]]
@@ -340,5 +340,10 @@ class ExSwiftArrayTests: XCTestCase {
         
         array.insert([-2], atIndex: -1)
         XCTAssertEqualObjects(array, [-2, 1, 2, 0, 9, 3, 4, 5, 10])
+    }
+    
+    func testLazy () {
+        XCTAssertTrue(Array(array.lazy) == array)
+        XCTAssertEqualObjects(Array(array.lazy.skip(2).filter { 6 / ($0-2) > 2 }), [3, 4])
     }
 }
