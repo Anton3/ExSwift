@@ -164,7 +164,16 @@ extension SequenceOf {
     *  @return Elements of the sequence up until an element does not meet the condition
     */
     func takeWhile (condition:(T?) -> Bool) -> SequenceOf<T>  {
-        return SequenceOf(TakeWhileSequence(self, condition))
+        var endConditionMet = false
+        var generator = self.generate()
+        
+        var takeWhileGenerator = GeneratorOf<T> {
+            if endConditionMet { return nil }
+            let nextItem = generator.next()
+            endConditionMet = !condition(nextItem)
+            return endConditionMet ? nil : nextItem
+        }
+        return SequenceOf(takeWhileGenerator)
     }
     
     /**
@@ -174,32 +183,5 @@ extension SequenceOf {
     */
     func toArray() -> Array<T> {
         return Array(self)
-    }
-}
-
-// a sequence adapter that implements the 'takeWhile' functionality
-struct TakeWhileSequence<S: Sequence>: Sequence {
-    let sequence: S
-    let condition: (S.GeneratorType.Element?) -> Bool
-    
-    init(_ sequence:S, _ condition:(S.GeneratorType.Element?) -> Bool) {
-        self.sequence = sequence
-        self.condition = condition
-    }
-    
-    func generate() -> GeneratorOf<S.GeneratorType.Element> {
-        var generator = self.sequence.generate()
-        var endConditionMet = false
-        return GeneratorOf<S.GeneratorType.Element> {
-            let next: S.GeneratorType.Element? = generator.next()
-            if !endConditionMet {
-                endConditionMet = !self.condition(next)
-            }
-            if endConditionMet {
-                return nil
-            } else {
-                return next
-            }
-        }
     }
 }
