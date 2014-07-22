@@ -115,6 +115,24 @@ class ExSwiftSequenceOfTests: XCTestCase {
         XCTAssertEqualObjects(Array(none), [])
     }
     
+    func testMap () {
+        var squares = SequenceOf(sequence).map { $0 * $0 }
+        XCTAssertEqualObjects(squares.toArray(), [1, 4, 9, 16, 25])
+        
+        var halves = SequenceOf(sequence).map { (next: Int) -> Double in Double(next) / 2.0 }
+        XCTAssertEqualObjects(halves.toArray(), [0.5, 1.0, 1.5, 2.0, 2.5])
+        
+        XCTAssertEqualObjects(SequenceOf(sequence).map { $0 }.toArray(), [1, 2, 3, 4, 5])
+    }
+    
+    func testReduce () {
+        XCTAssertEqual(SequenceOf(sequence).reduce(+), 15)
+        XCTAssertEqual(SequenceOf(sequence).reduce(1, *), 120)
+        XCTAssertEqual(SequenceOf(emptySequence).reduce(1, *), 1)
+        XCTAssertEqual(SequenceOf<Int>(sequence).reduce(String()) { "\($0)\($1)" }, "12345")
+        // ... SequenceOf(sequence).reduce("") ... <-- fails, compiler bug
+    }
+    
     func testReject () {
         var rejected = SequenceOf(sequence).reject { $0 == 3 }
         XCTAssertEqualObjects(Array(rejected), [1, 2, 4, 5])

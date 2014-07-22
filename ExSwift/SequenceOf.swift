@@ -97,6 +97,29 @@ extension SequenceOf {
     }
     
     /**
+    *  Maps each element of the sequence to another and collects them in the resulting sequence.
+    *  @param transform Function invoked to get the mapped elements from the initial elements.
+    *  @return Mapped sequence
+    */
+    func map<U> (transform: (T) -> U) -> SequenceOf<U> {
+        return SequenceOf<U>(Swift.map(self, transform))
+    }
+    
+    /**
+    *  Equivalent to Array.reduce
+    */
+    func reduce<U> (initial: U, combine: (U, T) -> U) -> U {
+        return Swift.reduce(self, initial, combine)
+    }
+    
+    /**
+    *  self.reduce() with initial value self.first()
+    */
+    func reduce (combine: (T, T) -> T) -> T {
+        return Swift.reduce(self.skip(1), self.first()!, combine)
+    }
+    
+    /**
     *  Opposite of filter
     *  @param exclude Function invoked to test elements for exlcusion from the sequence
     *  @return Filtered sequence
