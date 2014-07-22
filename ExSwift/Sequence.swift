@@ -25,12 +25,12 @@ extension SequenceOf {
     *  @return True if call returns true for any element of self
     */
     func any (call: (T) -> Bool) -> Bool {
-        var generator =  self.generate();
-        while let nextItem = generator.next() {
+        for nextItem in self {
             if call(nextItem) {
                 return true
             }
         }
+        
         return false
     }
     
