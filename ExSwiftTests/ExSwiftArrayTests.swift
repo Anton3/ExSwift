@@ -283,7 +283,7 @@ class ExSwiftArrayTests: XCTestCase {
         })
 
         XCTAssertEqualObjects(group, [true: 2, false: 3])
-m=     }
+    }
 
     func testReduceRight () {
         let list = [[1, 1], [2, 3], [4, 5]]
