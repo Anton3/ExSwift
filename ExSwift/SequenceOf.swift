@@ -144,8 +144,18 @@ extension SequenceOf {
     *  Returns the first n elements from self
     *  @return First n elements
     */
-    func take (n:Int) -> SequenceOf<T> {
-        return SequenceOf(TakeSequence(self, n))
+    func take (n: Int) -> SequenceOf<T> {
+        var count = 0
+        var generator = self.generate()
+        
+        var takeGenerator = GeneratorOf<T> {
+            if ++count <= n {
+                return generator.next()
+            } else {
+                return nil
+            }
+        }
+        return SequenceOf(takeGenerator)
     }
     
     /**
@@ -164,30 +174,6 @@ extension SequenceOf {
     */
     func toArray() -> Array<T> {
         return Array(self)
-    }
-}
-
-// a sequence adapter that implements the 'take' functionality
-struct TakeSequence<S: Sequence>: Sequence {
-    let sequence: S
-    let n: Int
-
-    init(_ sequence: S, _ n: Int) {
-        self.sequence = sequence
-        self.n = n
-    }
- 
-    func generate() -> GeneratorOf<S.GeneratorType.Element> {
-        var count = 0
-        var generator = self.sequence.generate()
-        return GeneratorOf<S.GeneratorType.Element> {
-            count++
-            if count > self.n {
-                return nil
-            } else {
-                return generator.next()
-            }
-        }
     }
 }
 
