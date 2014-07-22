@@ -125,4 +125,8 @@ class ExSwiftSequenceOfTests: XCTestCase {
         rejected = SequenceOf(sequence).reject { $0 == 10 }
         XCTAssertEqualObjects(Array(rejected), [1, 2, 3, 4, 5])
     }
+    
+    func testToArray () {
+        XCTAssertEqualObjects(SequenceOf(sequence).toArray(), [1, 2, 3, 4, 5])
+    }
 }

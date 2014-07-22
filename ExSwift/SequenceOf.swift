@@ -156,6 +156,15 @@ extension SequenceOf {
     func takeWhile (condition:(T?) -> Bool) -> SequenceOf<T>  {
         return SequenceOf(TakeWhileSequence(self, condition))
     }
+    
+    /**
+    *  Converts self to array. Useful for method chaining.
+    *  @return Array with elements of self.
+    *  @note This method is not lazy, and will not work with infinite sequences.
+    */
+    func toArray() -> Array<T> {
+        return Array(self)
+    }
 }
 
 // a sequence adapter that implements the 'take' functionality
