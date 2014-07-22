@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ExtensionsSequenceTests: XCTestCase {
+class ExSwiftSequenceOfTests: XCTestCase {
     
     var sequence = 1...5
     var emptySequence = 1..<1

@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ExtensionsArrayTests: XCTestCase {
+class ExSwiftArrayTests: XCTestCase {
 
     var array: Array<Int> = []
     var people: Array<Person> = []
